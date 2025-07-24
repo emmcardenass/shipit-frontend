@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 import mapboxgl from "mapbox-gl";
+import { useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 mapboxgl.accessToken = "pk.eyJ1Ijoic2hpcGl0bWV4aWNvIiwiYSI6ImNtMGZzMHZ5YjA3dTEyb3B2eng1OW80bWMifQ.jw1dTx1ZKBrD8uNKzCrzjw";
 
@@ -11,6 +12,11 @@ mapboxgl.accessToken = "pk.eyJ1Ijoic2hpcGl0bWV4aWNvIiwiYSI6ImNtMGZzMHZ5YjA3dTEyb
 export default function Landing() {
   const navigate = useNavigate();
   const mapContainer = useRef(null);
+
+  const [activeSection, setActiveSection] = useState({
+    label: "Inicio",
+    href: "#inicio",
+  });  
 
   useEffect(() => {
     gsap.set(".fade-in", { opacity: 1, y: 0 });
@@ -61,31 +67,39 @@ export default function Landing() {
   }, []);  
 
   useEffect(() => {
-    const highlight = document.getElementById("highlight");
-    const links = document.querySelectorAll(".menu-link");
-  
     const sections = [
-            { id: "inicio", link: document.querySelector('a[href="#inicio"]') },
-            { id: "beneficios", link: document.querySelector('a[href="#beneficios"]') },
-            { id: "tarifas", link: document.querySelector('a[href="#tarifas"]') },
-            { id: "cobertura", link: document.querySelector('a[href="#cobertura"]') },
-            { id: "testimonios", link: document.querySelector('a[href="#testimonios"]') },
-            { id: "faqs", link: document.querySelector('a[href="#faqs"]') },
-          ];
+      { id: "inicio", label: "Inicio" },
+      { id: "beneficios", label: "Beneficios" },
+      { id: "tarifas", label: "Tarifas" },
+      { id: "cobertura", label: "Cobertura" },
+      { id: "testimonios", label: "Testimonios" },
+      { id: "faqs", label: "FAQs" },
+    ];
   
-    const moveToLink = (link) => {
-      const linkRect = link.getBoundingClientRect();
-      const parentRect = link.parentElement.getBoundingClientRect();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const match = sections.find(sec => sec.id === entry.target.id);
+            if (match) {
+              setActiveSection({
+                label: match.label,
+                href: `#${match.id}`
+              });
+            }
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
   
-      highlight.style.left = `${linkRect.left - parentRect.left + linkRect.width / 2}px`;
-      highlight.style.width = `${linkRect.width}px`;
-      highlight.style.height = `${linkRect.height}px`;
-      highlight.style.top = "50%";
-      highlight.style.transform = "translate(-50%, -50%) scale(1)";
+    sections.forEach((sec) => {
+      const el = document.getElementById(sec.id);
+      if (el) observer.observe(el);
+    });
   
-      links.forEach(l => l.style.color = "#000");
-      link.style.color = "#fff";
-    };
+    return () => observer.disconnect();
+  }, []);  
   
     // Al cargar, inicia en "Inicio"
     moveToLink(document.getElementById("inicio-link"));
@@ -116,7 +130,7 @@ export default function Landing() {
         link.removeEventListener("click", (e) => moveToLink(e.target));
       });
     };
-  }, []);  
+  } 
   
   const moveHighlight = (e) => {
     const highlight = document.getElementById("highlight");
@@ -218,32 +232,11 @@ export default function Landing() {
     </div>
 
     {/* Menú */}
-    <nav className="relative flex text-black items-center font-bold font-[Inter] p-0">
-
-      {/* Bolita azul que se mueve */}
-      <span 
-        id="highlight"
-        className="absolute bg-[#0601FB] rounded-full transition-all duration-500"
-        style={{
-          width: "100px",
-          height: "48px",
-          top: "50%",
-          left: "0",
-          transform: "translate(-50%, -50%) scale(0.3)",
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      ></span>
-
-      {/* Links del menú */}
-      <a id="inicio-link" href="#inicio" className="menu-link relative z-10 hover:underline px-8 py-4 text-center">Inicio</a>
-      <a href="#beneficios" className="menu-link relative z-10 hover:underline px-8 py-4 text-center">Beneficios</a>
-      <a href="#tarifas" className="menu-link relative z-10 hover:underline px-8 py-4 text-center">Tarifas</a>
-      <a href="#cobertura" className="menu-link relative z-10 hover:underline px-8 py-4 text-center">Cobertura</a>
-      <a href="#testimonios" className="menu-link relative z-10 hover:underline px-8 py-4 text-center">Testimonios</a>
-      <a href="#faqs" className="menu-link relative z-10 hover:underline px-8 py-4 text-center">FAQs</a>
-
-    </nav>
+    <nav className="relative text-black items-center font-bold font-[Inter] p-0 h-12 flex justify-center">
+  <a href={activeSection.href} className="menu-link relative z-10 px-8 py-2 text-center transition-all duration-300">
+    {activeSection.label}
+  </a>
+</nav>
 
   </div>
 
@@ -589,5 +582,4 @@ export default function Landing() {
   </div>
 </div>
 </div>
-  )
-}
+);
