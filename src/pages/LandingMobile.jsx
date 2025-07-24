@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Button } from "@/components/ui/button";
-import { PhoneCall } from "lucide-react";
+import { PhoneCall } from "lucide-react"; // ✅ Se mantiene
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -55,17 +54,15 @@ export default function LandingMobile() {
       </p>
 
       <div ref={ctaRef} className="w-full max-w-xs">
-        <Button className="w-full bg-white text-[#0601FB] hover:bg-white/90">
-          <a
-            href="https://wa.me/528119775897"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2"
-          >
-            <PhoneCall className="h-5 w-5" />
-            Contáctanos por WhatsApp
-          </a>
-        </Button>
+        <a
+          href="https://wa.me/528119775897"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center w-full px-4 py-3 bg-white text-[#0601FB] font-medium rounded-lg shadow-md hover:bg-white/90 transition"
+        >
+          <PhoneCall className="mr-2 h-5 w-5" />
+          Contáctanos por WhatsApp
+        </a>
       </div>
 
       <p className="text-white/60 text-sm mt-10">
