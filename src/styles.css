@@ -1,0 +1,251 @@
+/* src/styles.css Premium */
+
+/* Tailwind Base */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================ */
+/* Estilos Globales */
+/* ============================ */
+body {
+  @apply text-gray-900 dark:text-gray-100 font-sans min-h-screen transition-colors duration-500;
+
+  /* 🎯 Fondo animado tipo envío */
+  background: linear-gradient(120deg, #f0f4f8, #dbeafe, #e0f2fe);
+  background-size: 400% 400%;
+  animation: envioLoop 15s ease infinite;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold;
+}
+
+/* ============================ */
+/* Glassmorphism para contenedores */
+/* ============================ */
+.card-glass {
+  @apply bg-white/60 dark:bg-white/10 backdrop-blur-md rounded-2xl shadow-xl p-6;
+}
+
+/* ============================ */
+/* Inputs Premium Unificados */
+/* ============================ */
+.input-style,
+select,
+textarea {
+  @apply bg-white/50 dark:bg-white/10 backdrop-blur-md border border-gray-300 dark:border-gray-600 rounded-xl py-3 px-5 w-full text-gray-800 dark:text-white placeholder-gray-400 transition-all duration-300;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  transition: transform 0.3s ease;
+  outline: none !important;
+}
+
+.input-style:hover,
+.input-style:focus,
+select:hover,
+select:focus,
+textarea:hover,
+textarea:focus {
+  transform: scale(1.03);
+  box-shadow: none;
+  outline: none;
+}
+
+/* ============================ */
+/* Ajuste visual para alinear SELECT con inputs */
+select.input-style {
+  padding-left: 1.25rem; /* Igual que px-5 */
+  appearance: none;
+  background-position: right 1.25rem center;
+  background-repeat: no-repeat;
+  background-size: 1rem;
+}
+
+/* ============================ */
+/* Placeholder gris para selects (compatibilidad universal) */
+select:invalid {
+  color: #9ca3af; /* gray-400 */
+}
+
+/* ============================ */
+/* Botones Premium */
+/* ============================ */
+.button-primary {
+  @apply bg-primary hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-full transition duration-300;
+}
+
+.button-success {
+  @apply bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-full transition duration-300;
+}
+
+.button-cancel {
+  @apply bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 px-6 rounded-full transition duration-300;
+}
+
+/* ============================ */
+/* Scrollbar Custom Premium */
+/* ============================ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+/* ============================ */
+/* Ocultar scrollbar sin deshabilitar scroll */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ============================ */
+/* Animaciones Fade In */
+/* ============================ */
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.7s ease-out forwards;
+  }
+
+  .animate-slideUp {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+}
+
+/* ============================ */
+/* Resaltado temporal destino */
+/* ============================ */
+.resaltado-destino {
+  animation: parpadeoDestino 1.2s ease-out;
+}
+
+@keyframes parpadeoDestino {
+  0% {
+    background-color: #dbeafe; /* azul clarito */
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* ============================ */
+/* Marcadores y efectos especiales */
+/* ============================ */
+.coche-marker {
+  box-shadow: 0 0 10px 3px #00ffffaa;
+}
+
+.pulse-marker {
+  animation: pulse 1.5s infinite;
+  transform: scale(1);
+  opacity: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1) rotateX(60deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(2.5) rotateX(60deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotateX(60deg);
+    opacity: 0;
+  }
+}
+
+.glow-bolt {
+  animation: pulse 1.5s infinite alternate;
+}
+
+.trail-dot {
+  transition: opacity 0.8s ease-out;
+}
+
+/* ============================ */
+/* Inputs tipo number sin flechas */
+/* ============================ */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ============================ */
+/* Animación de fondo tipo envío */
+/* ============================ */
+@keyframes envioLoop {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ============================ */
+/* Marcador personalizado del mapa */
+/* ============================ */
+.marker {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: red; /* Este será reemplazado dinámicamente */
+  border: 2px solid white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 10;
+}
+
+@keyframes blob {
+  0%, 100% {
+    border-radius: 40% 60% 55% 45% / 55% 45% 60% 40%;
+  }
+  50% {
+    border-radius: 60% 40% 45% 55% / 40% 60% 45% 55%;
+  }
+}
+
+@keyframes blobAmorfo {
+  0% {
+    border-radius: 55% 45% 65% 35% / 50% 60% 40% 50%;
+  }
+  25% {
+    border-radius: 60% 40% 50% 70% / 55% 35% 65% 45%;
+  }
+  50% {
+    border-radius: 50% 60% 40% 60% / 60% 40% 50% 70%;
+  }
+  75% {
+    border-radius: 65% 35% 60% 40% / 45% 55% 35% 65%;
+  }
+  100% {
+    border-radius: 55% 45% 65% 35% / 50% 60% 40% 50%;
+  }
+}
+
+.animate-blob {
+  animation: blobAmorfo 8s infinite ease-in-out;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE y Edge */
+  scrollbar-width: none;     /* Firefox */
+}

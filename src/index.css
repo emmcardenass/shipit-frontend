@@ -1,0 +1,100 @@
+/* src/index.css corregido premium */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---- Animaciones premium ---- */
+.hover-zoom {
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.hover-zoom:hover {
+  transform: scale(1.05);
+}
+
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+.nav-link:hover {
+  transform: translateY(-2px) scale(1.02);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease;
+}
+
+/* Fondo Glassmorphism refinado */
+.card-glass {
+  @apply bg-white/70 dark:bg-white/10 backdrop-blur-2xl rounded-2xl shadow-2xl p-6;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Inputs normales premium */
+input,
+textarea,
+select {
+  @apply w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0601FB] dark:bg-darkBackground dark:border-gray-600 dark:text-white dark:placeholder-gray-400;
+}
+
+/* Inputs de autocompletado Google */
+.input-autocomplete {
+  @apply w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-darkBackground dark:border-gray-600 dark:text-white dark:placeholder-gray-400;
+}
+
+/* Corrección íconos Google Autocomplete */
+.pac-icon {
+  display: none !important;
+}
+
+/* Autocomplete normalizado */
+.pac-target-input {
+  width: 100% !important;
+  height: auto !important;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #111827;
+  background-color: #ffffff;
+}
+.pac-target-input:focus {
+  border-color: #3b82f6;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+.dark .pac-target-input {
+  border-color: #4b5563;
+  background-color: #0d1117;
+  color: white;
+}
+
+.marker {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background-color: red; /* será reemplazado dinámicamente */
+  border: 2px solid white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  z-index: 10;
+}
+
+@keyframes vibrar {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.animate-vibrar {
+  animation: vibrar 0.5s ease;
+}
+
+.modo-blanco {
+  color: white !important;
+}
+
+.modo-blanco img {
+  filter: invert(1) brightness(2); /* Logo visible en fondo negro */
+}
+
