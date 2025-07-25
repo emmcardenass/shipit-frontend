@@ -219,28 +219,6 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-white text-gray-800 overflow-x-hidden font-sans">
-  
-      {/* HEADER */}
-      <header className="fixed w-full flex justify-center items-center px-6 py-6 z-50">
-
-  {/* Contenedor principal Glass */}
-  <div className="flex justify-between items-center w-full max-w-6xl backdrop-blur-lg border border-white/30 rounded-full shadow-2xl relative overflow-hidden p-0 bg-gradient-to-r from-blue-600/30 via-white/10 to-orange-500/30">
-
-    {/* Logo */}
-    <div className="flex items-center pl-6">
-      <img src="/1.png" alt="SHIP IT Logo" className="h-9 w-auto object-contain" />
-    </div>
-
-    {/* Menú */}
-    <nav className="relative text-black items-center font-bold font-[Inter] p-0 h-12 flex justify-center">
-  <a href={activeSection.href} className="menu-link relative z-10 px-8 py-2 text-center transition-all duration-300">
-    {activeSection.label}
-  </a>
-</nav>
-
-  </div>
-
-</header>
 
       {/* HERO */}
       <section id="inicio" className="h-screen pt-24 flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
