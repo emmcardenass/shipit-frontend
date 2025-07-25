@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,11 +11,6 @@ mapboxgl.accessToken = "pk.eyJ1Ijoic2hpcGl0bWV4aWNvIiwiYSI6ImNtMGZzMHZ5YjA3dTEyb
 export default function Landing() {
   const navigate = useNavigate();
   const mapContainer = useRef(null);
-
-  const [activeSection, setActiveSection] = useState({
-    label: "Inicio",
-    href: "#inicio",
-  });  
 
   useEffect(() => {
     gsap.set(".fade-in", { opacity: 1, y: 0 });
@@ -66,39 +61,31 @@ export default function Landing() {
   }, []);  
 
   useEffect(() => {
+    const highlight = document.getElementById("highlight");
+    const links = document.querySelectorAll(".menu-link");
+  
     const sections = [
-      { id: "inicio", label: "Inicio" },
-      { id: "beneficios", label: "Beneficios" },
-      { id: "tarifas", label: "Tarifas" },
-      { id: "cobertura", label: "Cobertura" },
-      { id: "testimonios", label: "Testimonios" },
-      { id: "faqs", label: "FAQs" },
-    ];
+            { id: "inicio", link: document.querySelector('a[href="#inicio"]') },
+            { id: "beneficios", link: document.querySelector('a[href="#beneficios"]') },
+            { id: "tarifas", link: document.querySelector('a[href="#tarifas"]') },
+            { id: "cobertura", link: document.querySelector('a[href="#cobertura"]') },
+            { id: "testimonios", link: document.querySelector('a[href="#testimonios"]') },
+            { id: "faqs", link: document.querySelector('a[href="#faqs"]') },
+          ];
   
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const match = sections.find(sec => sec.id === entry.target.id);
-            if (match) {
-              setActiveSection({
-                label: match.label,
-                href: `#${match.id}`
-              });
-            }
-          }
-        });
-      },
-      { threshold: 0.6 }
-    );
+    const moveToLink = (link) => {
+      const linkRect = link.getBoundingClientRect();
+      const parentRect = link.parentElement.getBoundingClientRect();
   
-    sections.forEach((sec) => {
-      const el = document.getElementById(sec.id);
-      if (el) observer.observe(el);
-    });
+      highlight.style.left = `${linkRect.left - parentRect.left + linkRect.width / 2}px`;
+      highlight.style.width = `${linkRect.width}px`;
+      highlight.style.height = `${linkRect.height}px`;
+      highlight.style.top = "50%";
+      highlight.style.transform = "translate(-50%, -50%) scale(1)";
   
-    return () => observer.disconnect();
-  }, []);  
+      links.forEach(l => l.style.color = "#000");
+      link.style.color = "#fff";
+    };
   
     // Al cargar, inicia en "Inicio"
     moveToLink(document.getElementById("inicio-link"));
@@ -129,7 +116,7 @@ export default function Landing() {
         link.removeEventListener("click", (e) => moveToLink(e.target));
       });
     };
-  } 
+  }, []);  
   
   const moveHighlight = (e) => {
     const highlight = document.getElementById("highlight");
@@ -221,7 +208,6 @@ export default function Landing() {
 
       {/* HERO */}
       <section id="inicio" className="h-screen pt-24 flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
-
 <div className="flex flex-col justify-center items-center z-10 transform -translate-y-32">
   <h1 className="hero-title text-6xl md:text-7xl font-black text-[#0601FB] font-[Inter]">
     ¡Vendiste? Ahora SHIP IT!
@@ -559,4 +545,5 @@ export default function Landing() {
   </div>
 </div>
 </div>
-);
+  )
+}
