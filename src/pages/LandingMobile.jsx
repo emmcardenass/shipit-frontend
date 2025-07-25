@@ -204,7 +204,11 @@ export default function Landing() {
   );  
 
   return (
-<div className="min-h-screen bg-white text-gray-800 overflow-x-hidden font-sans">
+    <div className="min-h-screen bg-white text-gray-800 overflow-x-hidden font-sans">
+  
+  <header className="fixed w-full flex justify-center items-center px-6 py-6 z-50">
+
+</header>
 
       {/* HERO */}
 <section id="inicio" className="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
@@ -546,6 +550,5 @@ export default function Landing() {
   </div>
 </div>
 </div>
-  );
-  
+  )
 }
