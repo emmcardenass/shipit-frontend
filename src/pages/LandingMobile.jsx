@@ -143,7 +143,7 @@ export default function Landing() {
     </p>
     <BotonAnimado
   texto="Comienza gratis"
-  extraClass="mt-10 font-[Inter] bg-gradient-to-r from-[#0601FB] to-[#FB8C00] text-white"
+  extraClass="mt-10 font-[Inter] bg-[#0601FB] text-white font-bold"
   onClick={() => navigate("/registro")}
 />
   </div>
