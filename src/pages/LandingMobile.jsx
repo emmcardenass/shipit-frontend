@@ -207,7 +207,8 @@ export default function Landing() {
     <div className="min-h-screen bg-white text-gray-800 overflow-x-hidden font-sans">
 
       {/* HERO */}
-      <section id="inicio" className="h-screen pt-24 flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
+<section id="inicio" className="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
+
 <div className="flex flex-col justify-center items-center z-10 transform -translate-y-32">
   <h1 className="hero-title text-6xl md:text-7xl font-black text-[#0601FB] font-[Inter]">
     ¡Vendiste? Ahora SHIP IT!
