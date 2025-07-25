@@ -58,56 +58,185 @@ export default function Landing() {
         .setLngLat([-100.3161, 25.6866])
         .addTo(map);
     }
-  }, []);   
+  }, []);  
+
+  useEffect(() => {
+    const highlight = document.getElementById("highlight");
+    const links = document.querySelectorAll(".menu-link");
+  
+    const sections = [
+            { id: "inicio", link: document.querySelector('a[href="#inicio"]') },
+            { id: "beneficios", link: document.querySelector('a[href="#beneficios"]') },
+            { id: "tarifas", link: document.querySelector('a[href="#tarifas"]') },
+            { id: "cobertura", link: document.querySelector('a[href="#cobertura"]') },
+            { id: "testimonios", link: document.querySelector('a[href="#testimonios"]') },
+            { id: "faqs", link: document.querySelector('a[href="#faqs"]') },
+          ];
+  
+    const moveToLink = (link) => {
+      const linkRect = link.getBoundingClientRect();
+      const parentRect = link.parentElement.getBoundingClientRect();
+  
+      highlight.style.left = `${linkRect.left - parentRect.left + linkRect.width / 2}px`;
+      highlight.style.width = `${linkRect.width}px`;
+      highlight.style.height = `${linkRect.height}px`;
+      highlight.style.top = "50%";
+      highlight.style.transform = "translate(-50%, -50%) scale(1)";
+  
+      links.forEach(l => l.style.color = "#000");
+      link.style.color = "#fff";
+    };
+  
+    // Al cargar, inicia en "Inicio"
+    moveToLink(document.getElementById("inicio-link"));
+  
+    // Scroll dinámico
+    const handleScroll = () => {
+      for (let i = 0; i < sections.length; i++) {
+        const sectionEl = document.getElementById(sections[i].id);
+        if (sectionEl) {
+          const rect = sectionEl.getBoundingClientRect();
+          if (rect.top <= 150 && rect.bottom >= 150) {
+            moveToLink(sections[i].link);
+            break;
+          }
+        }
+      }
+    };
+  
+    // Click manual
+    links.forEach(link => {
+      link.addEventListener("click", (e) => moveToLink(e.target));
+    });
+  
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      links.forEach(link => {
+        link.removeEventListener("click", (e) => moveToLink(e.target));
+      });
+    };
+  }, []);  
+  
+  const moveHighlight = (e) => {
+    const highlight = document.getElementById("highlight");
+    const rect = e.target.getBoundingClientRect();
+    const parentRect = e.target.parentElement.getBoundingClientRect();
+  
+    highlight.style.left = `${rect.left - parentRect.left + rect.width / 2}px`;
+    highlight.style.width = `${rect.width}px`;
+    highlight.style.height = `${rect.height}px`;
+    highlight.style.top = "50%";
+    highlight.style.transform = "translate(-50%, -50%) scale(1)";
+  
+    // Cambiar todos los links a negro y el actual a blanco
+    document.querySelectorAll(".menu-link").forEach(link => link.style.color = "#000");
+    e.target.style.color = "#fff";
+  };  
+
+  const handleHover = (e, entering) => {
+    const btn = e.currentTarget;
+    const overlay = btn.querySelector(".overlay-fill");
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    overlay.style.left = `${x}px`;
+    overlay.style.top = `${y}px`;
+
+    if (entering) {
+      overlay.style.transform = "translate(-50%, -50%) scale(1)";
+    } else {
+      overlay.style.transform = "translate(-50%, -50%) scale(0)";
+    }
+  };
+
+  const BotonAnimado = ({ texto, extraClass = "", onClick }) => (
+    <button
+      className={`relative overflow-hidden bg-[#0601FB] text-white rounded-full text-lg shadow-lg px-8 py-4 hover:scale-105 transition ${extraClass}`}
+      onMouseEnter={(e) => handleHover(e, true)}
+      onMouseLeave={(e) => handleHover(e, false)}
+      onClick={onClick}
+      style={{ position: "relative", zIndex: 1 }}
+    >
+      {texto}
+      <span
+        className="overlay-fill absolute bg-orange-500 scale-0 pointer-events-none animate-blob z-0"
+        style={{
+          width: "600px",
+          height: "600px",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%) scale(0)",
+          zIndex: -1,
+          borderRadius: "55% 45% 65% 35% / 50% 60% 40% 50%",
+          transition: "transform 1s ease",
+        }}
+      ></span>
+    </button>
+  );  
+
+  const BotonAnimadoMini = ({ texto, extraClass = "", onClick }) => (
+    <button
+      className={`relative overflow-hidden bg-blue-600 text-white rounded-full text-base font-semibold shadow-lg px-8 py-4 hover:scale-105 transition ${extraClass}`}
+      onMouseEnter={(e) => handleHover(e, true)}
+      onMouseLeave={(e) => handleHover(e, false)}
+      onClick={onClick}
+      style={{ height: "64px", position: "relative", zIndex: 1 }}
+    >
+      {texto}
+      <span
+        className="overlay-fill absolute bg-orange-500 scale-0 pointer-events-none animate-blob z-0"
+        style={{
+          width: "600px",
+          height: "600px",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%) scale(0)",
+          zIndex: -1,
+          borderRadius: "55% 45% 65% 35% / 50% 60% 40% 50%",
+          transition: "transform 1s ease",
+        }}
+      ></span>
+    </button>
+  );  
 
   return (
     <div className="min-h-screen bg-white text-gray-800 overflow-x-hidden font-sans">
   
       {/* HEADER */}
-      <header className="fixed w-full flex justify-center items-center px-6 py-6 z-50">
 
-  {/* Contenedor principal Glass */}
-  <div className="flex justify-between items-center w-full max-w-6xl backdrop-blur-lg border border-white/30 rounded-full shadow-2xl relative overflow-hidden p-0 bg-gradient-to-r from-blue-600/30 via-white/10 to-orange-500/30">
-
-    {/* Logo */}
-    <div className="flex items-center pl-6">
-      <img src="/1.png" alt="SHIP IT Logo" className="h-9 w-auto object-contain" />
-    </div>
-
-    {/* Botón Dashboard en su propio Glass separado */}
-<div className="ml-4 backdrop-blur-lg border border-white/30 rounded-full shadow-2xl hover:scale-105 transition cursor-pointer bg-gradient-to-r from-orange-500/10 via-orange-500/20 to-orange-500/30 w-[140px] h-[56px] flex items-center justify-center">
-
-<button
-  className="relative overflow-hidden text-black hover:text-white font-bold text-base px-4 rounded-full shadow-lg backdrop-blur-lg w-full transition-colors duration-300"
-  onMouseEnter={(e) => handleHover(e, true)}
-  onMouseLeave={(e) => handleHover(e, false)}
-  onClick={() => navigate("/registro")}
-  style={{ height: "56px", position: "relative", zIndex: 1, backgroundColor: "transparent" }}
->
-  Comienza gratis
-
-  <span
-    className="overlay-fill absolute bg-[#0601FB] scale-0 pointer-events-none animate-blob z-0"
-    style={{
-      width: "600px",
-      height: "600px",
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%) scale(0)",
-      zIndex: -1,
-      borderRadius: "55% 45% 65% 35% / 50% 60% 40% 50%",
-      transition: "transform 1s ease",
-    }}
-  ></span>
-
-</button>
-
-</div>
-
+      {/* HEADER */}
+<header className="fixed w-full flex justify-center items-center px-6 py-6 z-50">
+  {/* Solo el botón Dashboard, centrado */}
+  <div className="backdrop-blur-lg border border-white/30 rounded-full shadow-2xl hover:scale-105 transition cursor-pointer bg-gradient-to-r from-orange-500/10 via-orange-500/20 to-orange-500/30 w-[140px] h-[56px] flex items-center justify-center">
+    <button
+      className="relative overflow-hidden text-black hover:text-white font-bold text-base px-4 rounded-full shadow-lg backdrop-blur-lg w-full transition-colors duration-300"
+      onMouseEnter={(e) => handleHover(e, true)}
+      onMouseLeave={(e) => handleHover(e, false)}
+      onClick={() => navigate("/login")}
+      style={{ height: "56px", position: "relative", zIndex: 1, backgroundColor: "transparent" }}
+    >
+      Dashboard
+      <span
+        className="overlay-fill absolute bg-[#0601FB] scale-0 pointer-events-none animate-blob z-0"
+        style={{
+          width: "600px",
+          height: "600px",
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%) scale(0)",
+          zIndex: -1,
+          borderRadius: "55% 45% 65% 35% / 50% 60% 40% 50%",
+          transition: "transform 1s ease",
+        }}
+      ></span>
+    </button>
   </div>
-
-</header>
+</header>      
 
       {/* HERO */}
 <section id="inicio" className="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
