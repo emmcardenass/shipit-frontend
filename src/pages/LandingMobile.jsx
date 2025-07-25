@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ ignoreMobileResize: true });
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 mapboxgl.accessToken = "pk.eyJ1Ijoic2hpcGl0bWV4aWNvIiwiYSI6ImNtMGZzMHZ5YjA3dTEyb3B2eng1OW80bWMifQ.jw1dTx1ZKBrD8uNKzCrzjw";
@@ -13,50 +14,56 @@ export default function Landing() {
   const mapContainer = useRef(null);
 
   useEffect(() => {
-    gsap.set(".fade-in", { opacity: 1, y: 0 });
-    
-    gsap.utils.toArray(".fade-in").forEach((el) => {
-      gsap.from(el, {
-        scrollTrigger: { trigger: el, start: "top 80%" },
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: "power2.out",
-      });
-    });
+    if (typeof window === "undefined") return;
   
-    gsap.utils.toArray(".stat-number").forEach((el) => {
-      const finalValue = parseInt(el.dataset.final);
-      const prefix = el.dataset.prefix || "";
-      const suffix = el.dataset.suffix || "";
-  
-      gsap.fromTo(el, { innerText: 0 }, {
-        innerText: finalValue,
-        duration: 2,
-        scrollTrigger: { trigger: el, start: "top 80%" },
-        snap: { innerText: 1 },
-        ease: "power1.out",
-        onUpdate: () => {
-          const value = Math.floor(el.innerText).toLocaleString();
-          el.innerText = `${prefix}${value}${suffix}`;
-        },
+    setTimeout(() => {
+      gsap.utils.toArray(".fade-in").forEach((el) => {
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: "top 80%" },
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          ease: "power2.out",
+        });
       });
-    });
-  }, []);  
+  
+      gsap.utils.toArray(".stat-number").forEach((el) => {
+        const finalValue = parseInt(el.dataset.final);
+        const prefix = el.dataset.prefix || "";
+        const suffix = el.dataset.suffix || "";
+  
+        gsap.fromTo(el, { innerText: 0 }, {
+          innerText: finalValue,
+          duration: 2,
+          scrollTrigger: { trigger: el, start: "top 80%" },
+          snap: { innerText: 1 },
+          ease: "power1.out",
+          onUpdate: () => {
+            const value = Math.floor(el.innerText).toLocaleString();
+            el.innerText = `${prefix}${value}${suffix}`;
+          },
+        });
+      });
+    }, 100); // Espera a que monte el DOM completamente
+  }, []);   
   
   useEffect(() => {
-    if (mapContainer.current) {
-      const map = new mapboxgl.Map({
-        container: mapContainer.current,
-        style: "mapbox://styles/mapbox/streets-v12",
-        center: [-100.3161, 25.6866],
-        zoom: 11,
-        interactive: false, // 🔒 Esto desactiva toda la interacción
-      });
+    try {
+      if (mapContainer.current) {
+        const map = new mapboxgl.Map({
+          container: mapContainer.current,
+          style: "mapbox://styles/mapbox/streets-v12",
+          center: [-100.3161, 25.6866],
+          zoom: 11,
+          interactive: false,
+        });
   
-      new mapboxgl.Marker({ color: "blue" })
-        .setLngLat([-100.3161, 25.6866])
-        .addTo(map);
+        new mapboxgl.Marker({ color: "blue" })
+          .setLngLat([-100.3161, 25.6866])
+          .addTo(map);
+      }
+    } catch (error) {
+      console.error("🧨 Error al montar el mapa:", error);
     }
   }, []);  
 
