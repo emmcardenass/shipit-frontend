@@ -204,7 +204,7 @@ export default function Landing() {
   );  
 
   return (
-    <div className="min-h-screen bg-white text-gray-800 overflow-x-hidden font-sans">
+<div className="min-h-screen bg-white text-gray-800 overflow-x-hidden font-sans">
 
       {/* HERO */}
 <section id="inicio" className="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
@@ -546,5 +546,5 @@ export default function Landing() {
   </div>
 </div>
 </div>
-  );
+  )
 }
