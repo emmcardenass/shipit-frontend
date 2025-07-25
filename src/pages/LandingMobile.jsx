@@ -142,10 +142,10 @@ export default function Landing() {
       Entrega tus productos el mismo día, con opción de Cobro Contra Entrega y seguimiento en tiempo real.
     </p>
     <BotonAnimado
-      texto="Comienza gratis"
-      extraClass="mt-10 font-[Inter] bg-gradient-to-r from-blue-100 to-purple-200 text-white"
-      onClick={() => navigate("/registro")}
-    />
+  texto="Comienza gratis"
+  extraClass="mt-10 font-[Inter] bg-gradient-to-r from-[#0601FB] to-[#FB8C00] text-white"
+  onClick={() => navigate("/registro")}
+/>
   </div>
 
   <div className="absolute bottom-0 w-full flex justify-center">
