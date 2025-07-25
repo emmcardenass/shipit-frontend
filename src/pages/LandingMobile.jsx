@@ -134,21 +134,23 @@ export default function Landing() {
 
       {/* HERO */}
 <section id="inicio" className="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
+  <div className="flex flex-col justify-center items-center z-10 transform -translate-y-32">
+    <h1 className="hero-title text-6xl md:text-7xl font-black text-[#0601FB] font-[Inter]">
+      ¡Vendiste? Ahora SHIP IT!
+    </h1>
+    <p className="hero-sub mt-6 text-xl md:text-2xl max-w-2xl font-[Inter]">
+      Entrega tus productos el mismo día, con opción de Cobro Contra Entrega y seguimiento en tiempo real.
+    </p>
+    <BotonAnimado
+      texto="Comienza gratis"
+      extraClass="mt-10 font-[Inter] bg-gradient-to-r from-blue-100 to-purple-200 text-white"
+      onClick={() => navigate("/registro")}
+    />
+  </div>
 
-<div className="flex flex-col justify-center items-center z-10 transform -translate-y-32">
-  <h1 className="hero-title text-6xl md:text-7xl font-black text-[#0601FB] font-[Inter]">
-    ¡Vendiste? Ahora SHIP IT!
-  </h1>
-  <p className="hero-sub mt-6 text-xl md:text-2xl max-w-2xl font-[Inter]">
-  Entrega tus productos el mismo día, con opción de Cobro Contra Entrega y seguimiento en tiempo real.
-  </p>
-  <BotonAnimado texto="Crea tu cuenta" extraClass="mt-10 font-[Inter]" onClick={() => navigate("/registro")} />
-</div>
-
-<div className="absolute bottom-0 w-full flex justify-center">
-  <img src="/7.png" alt="SHIP IT Hero" className="max-h-[650px] object-contain" />
-</div>
-
+  <div className="absolute bottom-0 w-full flex justify-center">
+    <img src="/7.png" alt="SHIP IT Hero" className="max-h-[650px] object-contain" />
+  </div>
 </section>
 
       {/* BENEFICIOS */}
