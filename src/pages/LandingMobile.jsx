@@ -1,10 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 import mapboxgl from "mapbox-gl";
-import { useEffect, useState } from "react";
 import "mapbox-gl/dist/mapbox-gl.css";
 mapboxgl.accessToken = "pk.eyJ1Ijoic2hpcGl0bWV4aWNvIiwiYSI6ImNtMGZzMHZ5YjA3dTEyb3B2eng1OW80bWMifQ.jw1dTx1ZKBrD8uNKzCrzjw";
 
