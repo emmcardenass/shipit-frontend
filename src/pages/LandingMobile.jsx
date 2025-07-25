@@ -204,39 +204,7 @@ export default function Landing() {
   );  
 
   return (
-    <div className="min-h-screen bg-white text-gray-800 overflow-x-hidden font-sans">
-  
-      {/* HEADER */}
-
-      {/* HEADER */}
-<header className="fixed w-full flex justify-center items-center px-6 py-6 z-50">
-  {/* Solo el botón Dashboard, centrado */}
-  <div className="backdrop-blur-lg border border-white/30 rounded-full shadow-2xl hover:scale-105 transition cursor-pointer bg-gradient-to-r from-orange-500/10 via-orange-500/20 to-orange-500/30 w-[140px] h-[56px] flex items-center justify-center">
-    <button
-      className="relative overflow-hidden text-black hover:text-white font-bold text-base px-4 rounded-full shadow-lg backdrop-blur-lg w-full transition-colors duration-300"
-      onMouseEnter={(e) => handleHover(e, true)}
-      onMouseLeave={(e) => handleHover(e, false)}
-      onClick={() => navigate("/login")}
-      style={{ height: "56px", position: "relative", zIndex: 1, backgroundColor: "transparent" }}
-    >
-      Dashboard
-      <span
-        className="overlay-fill absolute bg-[#0601FB] scale-0 pointer-events-none animate-blob z-0"
-        style={{
-          width: "600px",
-          height: "600px",
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%) scale(0)",
-          zIndex: -1,
-          borderRadius: "55% 45% 65% 35% / 50% 60% 40% 50%",
-          transition: "transform 1s ease",
-        }}
-      ></span>
-    </button>
-  </div>
-</header>      
+    <div className="min-h-screen bg-white text-gray-800 overflow-x-hidden font-sans"> 
 
       {/* HERO */}
 <section id="inicio" className="h-screen flex flex-col justify-center items-center text-center px-6 relative overflow-hidden">
