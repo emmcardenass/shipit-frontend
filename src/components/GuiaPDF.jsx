@@ -91,14 +91,7 @@ export default function GuiaPDF({ envio }) {
 
   const tipoEnvio = envio?.envio?.tipo?.toUpperCase() || "STANDARD";
   const titulo = tipoEnvio;
-  const numeroGuia =
-  envio?.envio?.numeroGuia ||
-  envio?.numeroGuia ||
-  envio?.envio?.tracking ||
-  envio?.envio?.trackingNumber ||
-  envio?.tracking ||
-  envio?.trackingNumber ||
-  "SIN-GUIA";
+  const numeroGuia = envio?.envio?.numeroGuia || envio?.numeroGuia || envio?._id;
   const cod = envio?.envio?.tipoPago === "COD" ? envio?.envio?.cod : null;
 
   const alto = envio?.envio?.alto || 0;
@@ -178,3 +171,4 @@ export default function GuiaPDF({ envio }) {
     </Document>
   );
 }
+
